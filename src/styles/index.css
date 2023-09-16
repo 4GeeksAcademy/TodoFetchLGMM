@@ -29,3 +29,7 @@ input {
   visibility: visible;
   color: red;
 }
+
+.pending {
+  color: red;
+}

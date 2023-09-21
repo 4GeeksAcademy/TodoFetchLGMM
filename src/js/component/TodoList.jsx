@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 function TodoList() {
   const [inputValue, setInputValue] = useState("");
   const [list, setList] = useState([]);
+  const [isActive, setIsActive] = useState(false);
   const url = "https://playground.4geeks.com/apis/fake/todos/user/lgmm";
 
 
@@ -71,18 +72,27 @@ function TodoList() {
 };
 
 
-  // useEffect es un hook de React (por lo tanto es una funcion) que tiene dos parametros:
-  // el primer parametro es una funcion
-  // el segundo parametro es un array
+const deleteUser = async () => {
+  const options = {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" }
+  };
+  const response = await fetch(url, options);
+  if (response.ok) {
+    const data = await response.json();
+    setIsActive(false);
+    setList([]);
+    setTask("");
+  } else {
+    console.log("error: ", response.status, response.statusText);
+  }
+};
+
+
   useEffect(() => {
     getTodo();
-    // 1. todo el codigo de js que quiera ejecutar cuando se renderice el componente
     return true;
-    // 2. return todo el componente que quieres que se ejecute cuando se levante el componente
-  }, []); // 3. el array puede contener expresiones de js. cuando esas expresiones cambien de valor se va a ejecutar el useEffect
-  // 1. se ejecuta al inicio (cuando se monta)
-  // 2. se ejecuta al final (cuando se desmonta)
-  // 3. se ejecuta mientras (durante el ciclo de vida)
+  }, []); 
 
 
   return (
@@ -110,7 +120,9 @@ function TodoList() {
             : `Tienes ${list.length} tareas pendientes.`}
         </li>
       </ul>
-      <button onClick={() => handleRemoveItem(item)}>Limpiar todas las tareas</button>
+      <button type="button" className="btn btn-outline-primary btn-lg mb-3 me-3"
+        onClick={deleteUser}>Borrar Cuenta
+      </button>
 
     </div>
   );

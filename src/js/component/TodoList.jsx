@@ -28,27 +28,22 @@ function TodoList() {
   }
 
 
-  // 1. define una funcion asincrona que ejecura el request, -- GET
   const getTodo = async () => {
-    // 2. defino la variable con el endPoint
-    // 3. defino el request option
     let options = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     };
-    // 4. ejecuto el fetch en modo await y el resultado lo asigno a la variable response
+  
     const response = await fetch(url, options);
-    // 5. verifico que la respuesta sea buena o de un error
+   
     if (response.ok) {
-      // 5.1.1 si la respuesta es ok obtengo el json del response (body)
+      
       const data = await response.json();
-      // 5.1.2 realizo todo lo necesario con los datos obtenidos
       console.log("ok", data);
       setList(data);
     } else {
-      // 5.2 hago todo lo necesario en caso de un error en la consulta
       console.log("error", response.status, response.statusText);
     }
   };
@@ -70,6 +65,7 @@ function TodoList() {
       console.log("error", response.status, response.statusText);
     }
 };
+
 
 
 const deleteUser = async () => {
